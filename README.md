@@ -5,3 +5,4 @@ This module allows to carry out noise reduction of financial time series using R
 3. images - resources of the tutorial.
 
 We recommend to start with tutorial.
+Also, you can find more information in this article https://towardsdatascience.com/renko-brick-size-optimization-34d64400f60e
