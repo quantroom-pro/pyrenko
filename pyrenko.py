@@ -22,21 +22,25 @@ class renko:
         gap_div = int(float(last_price - self.renko_prices[-1]) / self.brick_size)
         is_new_brick = False
         start_brick = 0
-        num_new_bars = gap_div
+        num_new_bars = 0
 
         # When we have some gap in prices
         if gap_div != 0:
             # Forward any direction (up or down)
             if (gap_div > 0 and (self.renko_directions[-1] > 0 or self.renko_directions[-1] == 0)) or (gap_div < 0 and (self.renko_directions[-1] < 0 or self.renko_directions[-1] == 0)):
+                num_new_bars = gap_div
                 is_new_brick = True
                 start_brick = 0
             # Backward direction (up -> down or down -> up)
             elif np.abs(gap_div) >= 2: # Should be double gap at least
-                    num_new_bars -= np.sign(gap_div)
-                    start_brick = 2
-                    is_new_brick = True
-                    self.renko_prices.append(self.renko_prices[-1] + 2 * self.brick_size * np.sign(gap_div))
-                    self.renko_directions.append(np.sign(gap_div))
+                num_new_bars = gap_div
+                num_new_bars -= np.sign(gap_div)
+                start_brick = 2
+                is_new_brick = True
+                self.renko_prices.append(self.renko_prices[-1] + 2 * self.brick_size * np.sign(gap_div))
+                self.renko_directions.append(np.sign(gap_div))
+            #else:
+                #num_new_bars = 0
 
             if is_new_brick:
                 # Add each brick
